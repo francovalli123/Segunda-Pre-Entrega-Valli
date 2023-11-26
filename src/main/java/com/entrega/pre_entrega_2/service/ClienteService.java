@@ -14,6 +14,7 @@ public class ClienteService {
     @Autowired
     ClienteRepository clienteRepository;
 
+    //Post
     public ClienteModel create(String nombre, String apellido, String numeroDocumento){
         ClienteModel c = new ClienteModel();
         c.setNombre(nombre);
@@ -22,6 +23,7 @@ public class ClienteService {
         return this.clienteRepository.save(c);
     }
 
+    //Get
     public String findById(Integer id){
         Optional<ClienteModel> cajaCliente = this.clienteRepository.findById(id);
         if(cajaCliente.isPresent()){
@@ -37,6 +39,26 @@ public class ClienteService {
             return jsonFormat;
         }
         return null;
+    }
+
+    //Put
+    public ClienteModel update(ClienteModel client, Integer id){
+        Optional<ClienteModel> clienteDB = this.clienteRepository.findById(id);
+        ClienteModel c;
+        if(clienteDB.isPresent()){
+            c = clienteDB.get();
+            c.setNombre(client.getNombre());
+            c.setApellido(client.getApellido());
+            c.setNumeroDocumento(client.getNumeroDocumento());
+            return this.clienteRepository.save(c);
+        }else{
+            return null;
+        }
+    }
+
+    //Delete
+    public void delete(Integer id){
+        this.clienteRepository.deleteById(id);
     }
 
 }

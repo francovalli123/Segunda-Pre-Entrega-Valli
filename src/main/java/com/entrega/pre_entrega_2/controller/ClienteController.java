@@ -24,4 +24,20 @@ public class ClienteController {
     public ResponseEntity<?> findById(@PathVariable Integer id){
         return new ResponseEntity<>(this.clienteService.findById(id), HttpStatus.OK);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ClienteModel> update(@RequestBody ClienteModel clientUpdate,@PathVariable Integer id){
+        return new ResponseEntity<>(this.clienteService.update(clientUpdate, id), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Integer id) {
+        try {
+            clienteService.delete(id);
+            return new ResponseEntity<>("Cliente eliminado correctamente", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error al eliminar el cliente: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
