@@ -7,6 +7,8 @@ import com.entrega.pre_entrega_2.repository.DetallesFacturaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DetallesFacturaService {
 
@@ -20,18 +22,14 @@ public class DetallesFacturaService {
         DetallesFacturaModel detallesFactura = new DetallesFacturaModel();
         detallesFactura.setFactura(factura);
 
-        // Supongamos que obtenemos un producto por defecto, puedes ajustar esto según tus necesidades
         ProductoModel producto = new ProductoModel();
-        producto.setId(1); // Supongamos que el producto con ID 1 ya existe en la base de datos
+        producto.setId(1);
         detallesFactura.setProducto(producto);
 
         detallesFactura.setCantidadProductos(cantidadProductos);
         detallesFactura.setImporte(importe);
-
-        // Actualizar el total de la factura
         factura.setTotal(factura.getTotal() + importe);
 
-        // Guardar cambios en la factura y detalles de factura
         detallesFacturaRepository.save(detallesFactura);
 
         return detallesFactura;
@@ -39,5 +37,9 @@ public class DetallesFacturaService {
 
     public DetallesFacturaModel findById(Integer id) {
         return detallesFacturaRepository.findById(id).orElse(null);
+    }
+
+    public List<DetallesFacturaModel> getAllFacturasDetalles() {
+        return detallesFacturaRepository.findAll();
     }
 }

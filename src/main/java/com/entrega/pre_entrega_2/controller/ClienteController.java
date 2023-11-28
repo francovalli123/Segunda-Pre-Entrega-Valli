@@ -1,11 +1,14 @@
 package com.entrega.pre_entrega_2.controller;
 
 import com.entrega.pre_entrega_2.model.ClienteModel;
+import com.entrega.pre_entrega_2.model.FacturaModel;
 import com.entrega.pre_entrega_2.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping(path = "api/clients")
 @RestController
@@ -33,6 +36,16 @@ public class ClienteController {
         return new ResponseEntity<>(this.clienteService.findById(id), HttpStatus.OK);
     }
 
+    @GetMapping
+    public ResponseEntity<List<ClienteModel>> getAllClientes() {
+        List<ClienteModel> clientes = clienteService.getAllClientes();
+
+        if (!clientes.isEmpty()) {
+            return new ResponseEntity<>(clientes, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
     @PutMapping("/{id}")
     public ResponseEntity<ClienteModel> update(@RequestBody ClienteModel clientUpdate, @PathVariable Integer id) {
         return new ResponseEntity<>(this.clienteService.update(clientUpdate, id), HttpStatus.CREATED);

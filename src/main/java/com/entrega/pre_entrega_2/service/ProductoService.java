@@ -1,10 +1,12 @@
 package com.entrega.pre_entrega_2.service;
 
+import com.entrega.pre_entrega_2.model.FacturaModel;
 import com.entrega.pre_entrega_2.model.ProductoModel;
 import com.entrega.pre_entrega_2.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,6 +32,10 @@ public class ProductoService {
             return jsonFormat;
         }
         return null;
+    }
+
+    public List<ProductoModel> getAllProducts() {
+        return productoRepository.findAll();
     }
 
     //Post
