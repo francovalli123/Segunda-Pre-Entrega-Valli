@@ -79,15 +79,14 @@ public class FacturaController {
     }
     //DetallesFactura
     @PostMapping("/{facturaId}/detalles")
-    public ResponseEntity<DetallesFacturaModel> createDetalles(@PathVariable Integer facturaId,@RequestBody ProductoModel producto,@RequestParam int cantidadProductos,@RequestParam double importe) {
+    public ResponseEntity<?> createDetalles(@PathVariable Integer facturaId,@RequestBody ProductoModel producto,@RequestParam int cantidadProductos,@RequestParam double importe) {
         FacturaModel factura = this.facturaService.findById(facturaId);
 
         if (factura != null) {
             DetallesFacturaModel nuevosDetalles = this.detallesFacturaService.create(factura, cantidadProductos, importe);
             return new ResponseEntity<>(nuevosDetalles, HttpStatus.CREATED);
         } else {
-            return null;
-            //new ResponseEntity<>("Factura no encontrada", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Factura no encontrada", HttpStatus.NOT_FOUND);
         }
     }
     /*
