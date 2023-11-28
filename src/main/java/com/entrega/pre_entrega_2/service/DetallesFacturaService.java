@@ -39,7 +39,5 @@ public class DetallesFacturaService {
         return detallesFacturaRepository.findById(id).orElse(null);
     }
 
-    public List<DetallesFacturaModel> getAllFacturasDetalles() {
-        return detallesFacturaRepository.findAll();
-    }
+
 }

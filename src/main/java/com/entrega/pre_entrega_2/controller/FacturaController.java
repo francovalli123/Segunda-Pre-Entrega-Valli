@@ -102,14 +102,5 @@ public class FacturaController {
         Luego se pasa por parametros la cantidadProductos y el importe
      */
 
-    @GetMapping("/detalles")
-    public ResponseEntity<List<DetallesFacturaModel>> getAllFacturasDetalles() {
-        List<DetallesFacturaModel> detalles = detallesFacturaService.getAllFacturasDetalles();
 
-        if (!detalles.isEmpty()) {
-            return new ResponseEntity<>(detalles, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-    }
 }
