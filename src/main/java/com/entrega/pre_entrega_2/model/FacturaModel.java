@@ -1,8 +1,11 @@
 package com.entrega.pre_entrega_2.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
 import java.util.Date;
 
+@Data
 @Entity
 @Table(name="factura")
 public class FacturaModel {
@@ -10,8 +13,8 @@ public class FacturaModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne
 
+    @ManyToOne
     @JoinColumn(name = "clientes_id")
     private ClienteModel cliente;
 

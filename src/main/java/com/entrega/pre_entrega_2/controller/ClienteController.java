@@ -15,18 +15,26 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @PostMapping("/")
-    public ResponseEntity<ClienteModel> create(@RequestBody ClienteModel cliente){
+    public ResponseEntity<ClienteModel> create(@RequestBody ClienteModel cliente) {
         ClienteModel nuevoCliente = this.clienteService.create(cliente.getNombre(), cliente.getApellido(), cliente.getNumeroDocumento());
         return new ResponseEntity<>(nuevoCliente, HttpStatus.CREATED);
     }
+    /*
+        EJEMPLO JSON
+        {
+            "nombre": "nombre",
+            "apellido": "apellido",
+            "numeroDocumento": "123456789"
+        }
+     */
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable Integer id){
+    public ResponseEntity<?> findById(@PathVariable Integer id) {
         return new ResponseEntity<>(this.clienteService.findById(id), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ClienteModel> update(@RequestBody ClienteModel clientUpdate,@PathVariable Integer id){
+    public ResponseEntity<ClienteModel> update(@RequestBody ClienteModel clientUpdate, @PathVariable Integer id) {
         return new ResponseEntity<>(this.clienteService.update(clientUpdate, id), HttpStatus.CREATED);
     }
 
@@ -39,5 +47,4 @@ public class ClienteController {
             return new ResponseEntity<>("Error al eliminar el cliente: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }

@@ -26,7 +26,15 @@ public class ProductoController {
         ProductoModel nuevoProducto = this.productoService.create(producto.getDescripcion(), producto.getCodigo(), producto.getStock(), producto.getPrecio());
         return new ResponseEntity<>(nuevoProducto, HttpStatus.CREATED);
     }
-
+    /*
+        EJEMPLO JSON
+        {
+            "descripcion": "Descripción del producto",
+            "codigo": "codigo del producto",
+            "stock": 10,
+            "precio": 10.0
+        }
+     */
     @PutMapping("/{id}")
     public ResponseEntity<ProductoModel> update(@RequestBody ProductoModel productUpdate, @PathVariable Integer id){
         return new ResponseEntity<>(this.productoService.update(productUpdate, id), HttpStatus.CREATED);
