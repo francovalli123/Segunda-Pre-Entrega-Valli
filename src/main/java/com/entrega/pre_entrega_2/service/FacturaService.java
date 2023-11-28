@@ -2,11 +2,14 @@ package com.entrega.pre_entrega_2.service;
 
 import com.entrega.pre_entrega_2.model.ClienteModel;
 import com.entrega.pre_entrega_2.model.FacturaModel;
+import com.entrega.pre_entrega_2.model.ProductoModel;
 import com.entrega.pre_entrega_2.repository.FacturaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FacturaService {
@@ -42,5 +45,26 @@ public class FacturaService {
 
     public FacturaModel findById(Integer id) {
         return facturaRepository.findById(id).orElse(null);
+    }
+
+    public List<FacturaModel> getAllFacturas() {
+        return facturaRepository.findAll();
+    }
+    public FacturaModel update(FacturaModel factura, Integer id){
+        Optional<FacturaModel> facturaDB = this.facturaRepository.findById(id);
+        FacturaModel f;
+        if(facturaDB.isPresent()){
+            f = facturaDB.get();
+            f.setCliente(factura.getCliente());
+            f.setFechaCreacion(factura.getFechaCreacion());
+            f.setTotal(factura.getTotal());
+            return this.facturaRepository.save(f);
+        }else{
+            return null;
+        }
+    }
+
+    public void delete(Integer id){
+        this.facturaRepository.deleteById(id);
     }
 }

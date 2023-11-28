@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequestMapping(path = "api/facturasDetalles")
 @RestController
 public class FacturaController {
@@ -22,6 +24,7 @@ public class FacturaController {
     @Autowired
     private DetallesFacturaService detallesFacturaService;
 
+    //Factura
     @PostMapping("/")
     public ResponseEntity<FacturaModel> create(@RequestBody ClienteModel cliente, @RequestParam double total) {
         FacturaModel nuevaFactura = this.facturaService.create(cliente, total);
@@ -49,6 +52,32 @@ public class FacturaController {
         }
     }
 
+    @GetMapping
+    public ResponseEntity<List<FacturaModel>> getAllFacturas() {
+        List<FacturaModel> facturas = facturaService.getAllFacturas();
+
+        if (!facturas.isEmpty()) {
+            return new ResponseEntity<>(facturas, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<FacturaModel> update(@RequestBody FacturaModel facturaUpdate, @PathVariable Integer id){
+        return new ResponseEntity<>(this.facturaService.update(facturaUpdate, id), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Integer id) {
+        try {
+            facturaService.delete(id);
+            return new ResponseEntity<>("Factura eliminada correctamente", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error al eliminar la factura: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    //DetallesFactura
     @PostMapping("/{facturaId}/detalles")
     public ResponseEntity<DetallesFacturaModel> createDetalles(@PathVariable Integer facturaId,@RequestBody ProductoModel producto,@RequestParam int cantidadProductos,@RequestParam double importe) {
         FacturaModel factura = this.facturaService.findById(facturaId);
